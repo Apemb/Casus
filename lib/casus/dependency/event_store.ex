@@ -1,10 +1,10 @@
-defmodule Casus.Aggregate.Dependency.EventStore do
+defmodule Casus.Dependency.EventStore do
   @moduledoc """
   The behaviour specifying the Aggregate expectation concerning the event store.
   """
 
-  @type aggregate_id :: Casus.Aggregate.Infra.RootRawId.t
-  @type event :: Casus.Aggregate.Infra.Event.t
+  @type aggregate_id :: Casus.Infra.RootRawId.t
+  @type event :: Casus.Infra.Event.t
 
   @doc "The callback to init the event store, giving control of the initialization moment to the controlling app"
   @callback initialize() :: :ok | {:error, reason :: term}

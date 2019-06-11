@@ -54,7 +54,7 @@ defmodule AggregateSpec do
       end
 
       it "loads past events once" do
-        aggregate_id = Aggregate.Domain.Root.to_raw_id(shared.aggregate)
+        aggregate_id = Casus.Domain.Root.to_raw_id(shared.aggregate)
 
         (&Mock.EventStore.get_history/1)
         |> should(have_been_called_with(exactly: [{aggregate_id}]))
@@ -133,7 +133,7 @@ defmodule AggregateSpec do
         command_response = Aggregate.execute(shared.aggregate, command)
 
         initial_state = Counter.init_state()
-        aggregate_id = Aggregate.Domain.Root.to_raw_id(shared.aggregate)
+        aggregate_id = Casus.Domain.Root.to_raw_id(shared.aggregate)
         {:ok, domain_events} = Counter.handle(command, initial_state)
 
         aggregate_events = convert_to_aggregate_events(domain_events, shared.aggregate, uuid, shared.timestamp)
@@ -211,14 +211,14 @@ defmodule AggregateSpec do
           %Counter.Event.CounterIncremented{id: shared.id},
           %Counter.Event.CounterIncremented{id: shared.id},
         ]
-        aggregate_instance_spec = Aggregate.Domain.Root.to_raw_id(shared.aggregate)
+        aggregate_instance_spec = Casus.Domain.Root.to_raw_id(shared.aggregate)
         past_events = Enum.map(
           past_domain_events,
-          fn event -> %Aggregate.Infra.Event {
+          fn event -> %Casus.Infra.Event {
                         id: "xxx-xxx-xxx-xxx",
                         aggregate_id: aggregate_instance_spec,
-                        event_type: Aggregate.Infra.EventNameTypeProvider.to_type(event),
-                        event_data: Aggregate.Domain.Event.convert_to_raw(event),
+                        event_type: Casus.Infra.EventNameTypeProvider.to_type(event),
+                        event_data: Casus.Domain.Event.convert_to_raw(event),
                         event_timestamp: shared.timestamp
                       }
           end
@@ -238,7 +238,7 @@ defmodule AggregateSpec do
       end
 
       it "loads past events once" do
-        aggregate_id = Aggregate.Domain.Root.to_raw_id(shared.aggregate)
+        aggregate_id = Casus.Domain.Root.to_raw_id(shared.aggregate)
 
         (&Mock.EventStore.get_history/1)
         |> should(have_been_called_with(exactly: [{aggregate_id}]))
@@ -270,7 +270,7 @@ defmodule AggregateSpec do
       end
 
       it "loads past events once" do
-        aggregate_id = Aggregate.Domain.Root.to_raw_id(shared.aggregate)
+        aggregate_id = Casus.Domain.Root.to_raw_id(shared.aggregate)
 
         (&Mock.EventStore.get_history/1)
         |> should(have_been_called_with(exactly: [{aggregate_id}]))
@@ -303,9 +303,9 @@ defmodule AggregateSpec do
     Enum.map(
       domain_events,
       fn event ->
-        event_type = Aggregate.Infra.EventNameTypeProvider.to_type(event)
-        event_data = Aggregate.Domain.Event.convert_to_raw(event)
-        %Aggregate.Infra.Event{
+        event_type = Casus.Infra.EventNameTypeProvider.to_type(event)
+        event_data = Casus.Domain.Event.convert_to_raw(event)
+        %Casus.Infra.Event{
           id: fixed_id,
           aggregate_id: aggregate_id,
           event_type: event_type,

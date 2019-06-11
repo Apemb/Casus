@@ -1,4 +1,4 @@
-defmodule Casus.Aggregate.Dependency.UUID do
+defmodule Casus.Dependency.UUID do
   @moduledoc """
     The behaviour specifying the Aggregate expectation concerning the UUID generator.
   """

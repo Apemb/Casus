@@ -1,10 +1,10 @@
-defmodule Casus.Aggregate.Infra.EventNameTypeProvider do
+defmodule Casus.Infra.EventNameTypeProvider do
   @moduledoc """
   Module to provide the conversion between the event struct and a corresponding string type.
   """
 
   @type event :: struct
-  @type type :: Casus.Aggregate.Infra.EventType.t
+  @type type :: Casus.Infra.EventType.t
 
   @doc """
   Type of the given Elixir struct as a string
@@ -26,6 +26,6 @@ defmodule Casus.Aggregate.Infra.EventNameTypeProvider do
 
   @doc false
   def type_provider do
-    Application.get_env(:casus, :type_provider, Casus.Aggregate.Infra.DefaultEventNameTypeProvider)
+    Application.get_env(:casus, :type_provider, Casus.Infra.DefaultEventNameTypeProvider)
   end
 end

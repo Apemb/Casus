@@ -1,4 +1,4 @@
-defmodule Casus.Aggregate.Infra.EventType do
+defmodule Casus.Infra.EventType do
   @moduledoc """
   A struct representing the type of an event.
 
@@ -12,7 +12,7 @@ defmodule Casus.Aggregate.Infra.EventType do
   An event from the Calculator bounded context, related to the initialization of the aggregate Counter
   could have the following type:
   ```
-  %Aggregate.Infra.EventType {
+  %Casus.Infra.EventType {
     context_name: "Calculator",
     aggregate_name: "Counter",
     event_name: "CounterInitialized",
@@ -21,7 +21,7 @@ defmodule Casus.Aggregate.Infra.EventType do
   ```
   """
 
-  @type t :: %Casus.Aggregate.Infra.EventType {
+  @type t :: %Casus.Infra.EventType {
                context_name: String.t,
                aggregate_name: String.t,
                event_name: String.t,

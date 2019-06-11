@@ -3,8 +3,8 @@ defmodule Casus.Aggregate do
     The Casus.Aggregate module is the instances orchestrator implementation.
 
     Dependencies needed :
-      - Casus.Aggregate.Dependency.EventStore @behaviour accessible in env variable :event_store
-      - Casus.Aggregate.Dependency.UUID @behaviour accessible in env variable :uuid
+      -  Casus.Dependency.EventStore @behaviour accessible in env variable :event_store
+      -  Casus.Dependency.UUID @behaviour accessible in env variable :uuid
   """
 
   @event_store Application.get_env(:casus, :event_store)

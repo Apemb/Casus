@@ -1,4 +1,4 @@
-defmodule Casus.Aggregate.Infra.TimeStamper do
+defmodule Casus.Infra.TimeStamper do
   @moduledoc """
   Module to provide a mechanism to generate timestamps.
   """
@@ -14,20 +14,20 @@ defmodule Casus.Aggregate.Infra.TimeStamper do
     @callback now() :: DateTime.t()
   end
 
-  @behaviour Casus.Aggregate.Infra.TimeStamper.Behaviour
+  @behaviour Casus.Infra.TimeStamper.Behaviour
 
-  @impl Casus.Aggregate.Infra.TimeStamper.Behaviour
+  @impl Casus.Infra.TimeStamper.Behaviour
   def now(), do: time_stamper().now()
 
   def time_stamper do
-    Application.get_env(:casus, :time_stamper, Casus.Aggregate.Infra.TimeStamper.Default)
+    Application.get_env(:casus, :time_stamper, Casus.Infra.TimeStamper.Default)
   end
 
   defmodule Default do
     @moduledoc false
-    @behaviour Casus.Aggregate.Infra.TimeStamper.Behaviour
+    @behaviour Casus.Infra.TimeStamper.Behaviour
 
-    @impl Casus.Aggregate.Infra.TimeStamper.Behaviour
+    @impl Casus.Infra.TimeStamper.Behaviour
     def now(), do: DateTime.utc_now()
   end
 end

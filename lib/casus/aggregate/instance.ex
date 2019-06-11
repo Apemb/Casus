@@ -39,7 +39,7 @@ defmodule Casus.Aggregate.Instance do
 
   def init(%{aggregate_id: aggregate_id}) do
 
-    aggregate_raw_id = Casus.Aggregate.Domain.Root.to_raw_id(aggregate_id)
+    aggregate_raw_id = Casus.Domain.Root.to_raw_id(aggregate_id)
     case @event_store.get_history(aggregate_raw_id) do
       {:ok, events} -> generate_inital_response(events, aggregate_id)
       {:error, reason} -> {:stop, reason}
@@ -58,15 +58,15 @@ defmodule Casus.Aggregate.Instance do
   end
 
   defp generate_aggregate_state_from_events(events, aggregate_id) do
-    initial_aggregate_state = Casus.Aggregate.Domain.Root.init_state(aggregate_id)
+    initial_aggregate_state = Casus.Domain.Root.init_state(aggregate_id)
     Enum.map(events, &convert_infra_events_to_domain/1)
-    |> Enum.reduce(initial_aggregate_state, &Casus.Aggregate.Domain.Root.apply(aggregate_id, &1, &2))
+    |> Enum.reduce(initial_aggregate_state, &Casus.Domain.Root.apply(aggregate_id, &1, &2))
   end
 
-  defp convert_infra_events_to_domain(%Casus.Aggregate.Infra.Event{} = infra_event) do
+  defp convert_infra_events_to_domain(%Casus.Infra.Event{} = infra_event) do
     infra_event.event_type
-    |> Casus.Aggregate.Infra.EventNameTypeProvider.to_struct()
-    |> Casus.Aggregate.Domain.Event.convert_from_raw(infra_event.event_data)
+    |> Casus.Infra.EventNameTypeProvider.to_struct()
+    |> Casus.Domain.Event.convert_from_raw(infra_event.event_data)
   end
 
   def handle_call(
@@ -74,7 +74,7 @@ defmodule Casus.Aggregate.Instance do
         _from,
         %Instance.State{aggregate_id: aggregate_id, aggregate_state: aggregate_state} = gen_server_state
       ) do
-    command_response = Casus.Aggregate.Domain.Root.handle(aggregate_id, command, aggregate_state)
+    command_response = Casus.Domain.Root.handle(aggregate_id, command, aggregate_state)
 
     new_gen_server_state = command_response
                            |> handle_domain_command_response(gen_server_state)
@@ -100,7 +100,7 @@ defmodule Casus.Aggregate.Instance do
     new_aggregate_state = Enum.reduce(
       events,
       aggregate_state,
-      &Casus.Aggregate.Domain.Root.apply(aggregate_id, &1, &2)
+      &Casus.Domain.Root.apply(aggregate_id, &1, &2)
     )
 
     {:ok, new_aggregate_state}
@@ -120,7 +120,7 @@ defmodule Casus.Aggregate.Instance do
           id: @uuid.generate(),
           aggregate_id: aggregate_id,
           event: event,
-          timestamp: Casus.Aggregate.Infra.TimeStamper.now()
+          timestamp: Casus.Infra.TimeStamper.now()
         }
       end
     )
@@ -132,11 +132,11 @@ defmodule Casus.Aggregate.Instance do
     infra_events = Enum.map(
       aggregate_events,
       fn aggregate_event ->
-        raw_event_data = Casus.Aggregate.Domain.Event.convert_to_raw(aggregate_event.event)
-        event_type = Casus.Aggregate.Infra.EventNameTypeProvider.to_type(aggregate_event.event)
-        aggregate_id = Casus.Aggregate.Domain.Root.to_raw_id(aggregate_event.aggregate_id)
+        raw_event_data = Casus.Domain.Event.convert_to_raw(aggregate_event.event)
+        event_type = Casus.Infra.EventNameTypeProvider.to_type(aggregate_event.event)
+        aggregate_id = Casus.Domain.Root.to_raw_id(aggregate_event.aggregate_id)
 
-        %Casus.Aggregate.Infra.Event{
+        %Casus.Infra.Event{
           id: aggregate_event.id,
           aggregate_id: aggregate_id,
           event_type: event_type,

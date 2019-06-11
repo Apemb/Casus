@@ -1,4 +1,4 @@
-defimpl Casus.Aggregate.Domain.Event, for: Fixture.Counter.Event.CounterInitialized do
+defimpl Casus.Domain.Event, for: Fixture.Counter.Event.CounterInitialized do
   def convert_to_raw(event) do
     %{"id" => event.id, "initial_counter_value" => event.initial_counter_value}
   end
@@ -12,7 +12,7 @@ defimpl Casus.Aggregate.Domain.Event, for: Fixture.Counter.Event.CounterInitiali
   end
 end
 
-defimpl Casus.Aggregate.Domain.Event, for: Fixture.Counter.Event.CounterIncremented do
+defimpl Casus.Domain.Event, for: Fixture.Counter.Event.CounterIncremented do
   def convert_to_raw(event) do
     %{"id" => event.id}
   end

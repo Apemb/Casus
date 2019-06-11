@@ -1,6 +1,6 @@
-defprotocol Casus.Aggregate.Domain.Root do
+defprotocol Casus.Domain.Root do
   @moduledoc """
-  The Casus.Aggregate.Domain.Root protocol.
+  The Casus.Domain.Root protocol.
 
   Implemented by an adapter to standardise all Root Domain Modules behaviour.
   The protocol is implemented on a struct representing the aggregate root identity.
@@ -46,7 +46,7 @@ defprotocol Casus.Aggregate.Domain.Root do
   @doc """
   Function used to represent the aggregate id as a standardised struct of strings.
   """
-  @spec to_raw_id(aggregate_id) :: Casus.Aggregate.Infra.RootRawId.t
+  @spec to_raw_id(aggregate_id) :: Casus.Infra.RootRawId.t
   def to_raw_id(aggregate_id)
 
   @doc """

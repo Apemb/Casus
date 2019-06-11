@@ -1,4 +1,4 @@
-defmodule Casus.Aggregate.Infra.Event do
+defmodule Casus.Infra.Event do
   @moduledoc """
   The struct specifying the Aggregate application vision about a raw event to use in persisting the events.
   This is a JSON encodable struct.
@@ -11,12 +11,12 @@ defmodule Casus.Aggregate.Infra.Event do
   """
 
   @type id :: String.t
-  @type aggregate_id ::Casus.Aggregate.Infra.RootRawId.t
-  @type event_type ::Casus.Aggregate.Infra.EventType.t
+  @type aggregate_id ::Casus.Infra.RootRawId.t
+  @type event_type ::Casus.Infra.EventType.t
   @type event_data :: struct
   @type event_timestamp :: DateTime.t
 
-  @type t :: %Casus.Aggregate.Infra.Event {
+  @type t :: %Casus.Infra.Event {
                id: id,
                aggregate_id: aggregate_id,
                event_type: event_type,

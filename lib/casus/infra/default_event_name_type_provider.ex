@@ -1,4 +1,4 @@
-defmodule Casus.Aggregate.Infra.DefaultEventNameTypeProvider do
+defmodule Casus.Infra.DefaultEventNameTypeProvider do
   @moduledoc """
   Default event name type provider.
 
@@ -10,7 +10,7 @@ defmodule Casus.Aggregate.Infra.DefaultEventNameTypeProvider do
   event = %Elixir.Blog.Post.Event.PostCreated{}
   type = Casus.AggregateInfra.DefaultEventNameTypeProvider.to_type(event)
 
-  type == %Aggregate.Infra.EventType{
+  type == %Casus.Infra.EventType{
       context_name: "Blog",
       aggregate_name: "Post",
       event_name: "Post",
@@ -19,7 +19,7 @@ defmodule Casus.Aggregate.Infra.DefaultEventNameTypeProvider do
   ```
   """
 
-  @behaviour Casus.Aggregate.Infra.EventNameTypeProvider
+  @behaviour Casus.Infra.EventNameTypeProvider
   @regex_string "Elixir\\.(?<context>[A-Za-z.]*?)\\.(?<aggregate>[A-Za-z]+)\\.Event\\.(?<event>[A-Za-z]+)"
 
   def to_type(event) do
@@ -36,7 +36,7 @@ defmodule Casus.Aggregate.Infra.DefaultEventNameTypeProvider do
     event_name = Map.get(named_captures, "event")
     version = "1"
 
-    %Casus.Aggregate.Infra.EventType{
+    %Casus.Infra.EventType{
       context_name: context_name,
       aggregate_name: aggregate_name,
       event_name: event_name,
@@ -44,7 +44,7 @@ defmodule Casus.Aggregate.Infra.DefaultEventNameTypeProvider do
     }
   end
 
-  def to_struct(%Casus.Aggregate.Infra.EventType{} = type) do
+  def to_struct(%Casus.Infra.EventType{} = type) do
     struct_module = @regex_string
                     |> String.replace("\\.", ".")
                     |> String.replace("(?<context>[A-Za-z.]*?)", type.context_name)

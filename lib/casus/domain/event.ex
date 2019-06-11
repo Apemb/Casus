@@ -1,6 +1,6 @@
-defprotocol Casus.Aggregate.Domain.Event do
+defprotocol Casus.Domain.Event do
   @moduledoc """
-  The Casus.Aggregate.Domain.Event protocol.
+  The Casus.Domain.Event protocol.
 
   Implemented by an adapter to allow Domain Events to be saved.
   The domain event is adapted to a map / or another struct implementing the JASON.encoder protocol.

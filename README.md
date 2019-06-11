@@ -28,5 +28,5 @@ There should be an explanation about how to configure the domain to use the Aggr
 In particular : 
  - the Aggregate.Module protocol
  - the Aggregate.Module.Event protocol
- - the Aggregate.Infra.EventNameTypeProvider behaviour
+ - the Casus.Infra.EventNameTypeProvider behaviour
  

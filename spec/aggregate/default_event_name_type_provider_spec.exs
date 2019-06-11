@@ -11,7 +11,7 @@ defmodule DefaultEventNameTypeProviderSpec do
 
       before do
         event = %Fixture.Counter.Event.CounterInitialized{id: "fake-uuid", initial_counter_value: 0}
-        type = Aggregate.Infra.DefaultEventNameTypeProvider.to_type(event)
+        type = Casus.Infra.DefaultEventNameTypeProvider.to_type(event)
 
         {:shared, type: type}
       end
@@ -49,13 +49,13 @@ defmodule DefaultEventNameTypeProviderSpec do
   describe "to_struct" do
 
     before do
-      type = %Aggregate.Infra.EventType{
+      type = %Casus.Infra.EventType{
         context_name: "Fixture",
         aggregate_name: "Counter",
         event_name: "CounterInitialized",
         version: "1"
       }
-      struct = Aggregate.Infra.DefaultEventNameTypeProvider.to_struct(type)
+      struct = Casus.Infra.DefaultEventNameTypeProvider.to_struct(type)
 
       {:shared, struct: struct}
     end
