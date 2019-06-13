@@ -1,6 +1,10 @@
 defmodule Casus.Aggregate do
   @moduledoc """
-    The Casus.Aggregate module is the instances orchestrator implementation.
+    The Casus.Aggregate module is the instance orchestrator implementation.
+
+    An instance is an aggregate instance that is up to date with the events present in the data-store.
+    An instance run on a process and has in memory an up to date projection of the events. Il uses this projection
+    to accept or refuse commands.
 
     Dependencies needed :
       -  Casus.Dependency.EventStore @behaviour accessible in env variable :event_store

@@ -7,6 +7,8 @@ defmodule Casus.Aggregate.Instance do
   @uuid Application.get_env(:casus, :uuid)
 
   defmodule State do
+    @moduledoc false
+
     @type aggregate_id :: struct
     @type aggregate_state :: struct
 

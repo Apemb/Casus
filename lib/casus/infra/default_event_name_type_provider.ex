@@ -1,23 +1,5 @@
 defmodule Casus.Infra.DefaultEventNameTypeProvider do
-  @moduledoc """
-  Default event name type provider.
-
-  It only works with Event struct that have a module name that goes :
-    `Elixir.(BoundedContext).(Aggregate).Event.(EventName)`
-
-  ## Example
-  ```
-  event = %Elixir.Blog.Post.Event.PostCreated{}
-  type = Casus.AggregateInfra.DefaultEventNameTypeProvider.to_type(event)
-
-  type == %Casus.Infra.EventType{
-      context_name: "Blog",
-      aggregate_name: "Post",
-      event_name: "Post",
-      version: "1"
-    }
-  ```
-  """
+  @moduledoc false
 
   @behaviour Casus.Infra.EventNameTypeProvider
   @regex_string "Elixir\\.(?<context>[A-Za-z.]*?)\\.(?<aggregate>[A-Za-z]+)\\.Event\\.(?<event>[A-Za-z]+)"

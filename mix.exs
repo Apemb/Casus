@@ -1,24 +1,29 @@
 defmodule Casus.MixProject do
   use Mix.Project
 
+  @version "0.0.1"
+
   def project do
     [
       app: :casus,
-      version: "0.1.0",
+      version: @version,
+      name: "Casus",
+      source_url: "https://github.com/apemb/casus",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
+      deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env()),
+      aliases: aliases(),
       spec_paths: ["spec"],
       spec_pattern: "*_spec.exs",
       preferred_cli_env: [
         espec: :test
       ],
-      deps: deps(),
-      aliases: aliases()
+      package: package(),
+      docs: docs()
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger],
@@ -26,9 +31,9 @@ defmodule Casus.MixProject do
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:espec, "~> 1.7.0", only: :test},
       {:ersatz, "~> 0.1.1", only: :test}
     ]
@@ -41,6 +46,62 @@ defmodule Casus.MixProject do
     [
       test: ["espec"],
       espec: ["espec"]
+    ]
+  end
+
+  defp package do
+    [
+      description: "Event Sourcing light framework for Elixir",
+      maintainers: [
+        "Antoine Boileau"
+      ],
+      licenses: ["MIT"],
+      links: %{
+        GitHub: "https://github.com/apemb/casus"
+      }
+    ]
+  end
+
+  ## Documentation
+
+  defp docs do
+    [
+      main: "Casus",
+      source_ref: "v#{@version}",
+      extras: extras(),
+      groups_for_modules: groups_for_modules(),
+    ]
+  end
+
+  defp extras do
+    [
+      "README.md"
+    ]
+  end
+
+  defp groups_for_modules do
+    # Ungrouped:
+    # - Casus
+
+    [
+      "Aggregate": [
+        Casus.Aggregate
+      ],
+      "Domain": [
+        Casus.Domain.Event,
+        Casus.Domain.Root
+      ],
+      "Dependencies": [
+        Casus.Dependency.EventStore,
+        Casus.Dependency.UUID
+      ],
+      "Infra": [
+        Casus.Infra.Event,
+        Casus.Infra.EventType,
+        Casus.Infra.EventNameTypeProvider,
+        Casus.Infra.RootRawId,
+        Casus.Infra.TimeStamper
+      ]
     ]
   end
 end

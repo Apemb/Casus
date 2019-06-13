@@ -3,7 +3,6 @@
 Casus is a modular framework to start event sourcing in elixir.
 
 
-
 ## Installation
 
 Will be available, one day.
@@ -30,3 +29,6 @@ In particular :
  - the Aggregate.Module.Event protocol
  - the Casus.Infra.EventNameTypeProvider behaviour
  
+## License
+ 
+ See LICENSE.md.
